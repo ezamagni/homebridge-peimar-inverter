@@ -1,15 +1,31 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
+  "pluginAlias": "HomebridgePeimarInverter",
   "pluginType": "platform",
   "singular": true,
   "schema": {
     "type": "object",
     "properties": {
-      "name": {
-        "title": "Name",
+      "address": {
+        "title": "Inverter IP address",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "192.168.1.21",
+        "description": "The local IP address at which the inverter's Wi-Fi module publishes a web server for configuration and statistics."
+      },
+      "port": {
+        "title": "Inverter port",
+        "type": "integer",
+        "required": true,
+        "default": "80",
+        "description": "The port at which the inverter's web server is reachable."
+      },
+      "updateInterval": {
+        "title": "Update interval",
+        "type": "integer",
+        "required": false,
+        "minimum": 1,
+        "default": "60",
+        "description": "The update rate (in seconds) at witch the inverter is reached for updates."
       }
     }
   }

@@ -8,7 +8,7 @@
             "type": "node",
             "program": "${userHome}/.nvm/versions/node/v16.17.0/bin/homebridge",
             "args": ["-D"],
-            "preLaunchTask": "tsc build",
+            "preLaunchTask": "tsc: build",
             "request": "launch",
             "name": "Debug plugin",
             "skipFiles": [

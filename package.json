@@ -1,16 +1,16 @@
 {
   "private": true,
-  "displayName": "Plugin Name",
-  "name": "homebridge-plugin-name",
+  "displayName": "Peimar Inverter",
+  "name": "homebridge-peimar-inverter",
   "version": "1.0.0",
-  "description": "A short description about what your plugin does.",
+  "description": "Homebridge plugin to read the power output of Peimar J-type inverters",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
+    "url": "git://github.com/ezamagni/homebridge-peimar-inverter.git"
   },
   "bugs": {
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+    "url": "https://github.com/ezamagni/homebridge-peimar-inverter/issues"
   },
   "engines": {
     "node": ">=14.18.1",
@@ -24,7 +24,9 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "peimar",
+    "inverter"
   ],
   "dependencies": {},
   "devDependencies": {
