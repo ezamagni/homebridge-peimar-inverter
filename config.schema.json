@@ -25,7 +25,7 @@
         "required": false,
         "minimum": 1,
         "default": "60",
-        "description": "The update rate (in seconds) at witch the inverter is reached for updates."
+        "description": "The update rate (in seconds) at witch the inverter should be queried for updates."
       }
     }
   }
