@@ -1,15 +1,68 @@
 import {
-  AccessoryPlugin,
   CharacteristicSetCallback,
   CharacteristicValue,
   HAP,
-  Logging,
   Service,
   CharacteristicEventTypes,
+  PlatformAccessory,
 } from 'homebridge';
 
 import http from 'https';
+import { PeimarInverterPlatform } from './platform';
 
+export class InverterAccessory {
+
+  private readonly service: Service;
+  private readonly timer: NodeJS.Timer;
+
+  constructor(
+    private readonly platform: PeimarInverterPlatform,
+    private readonly accessory: PlatformAccessory,
+  ) {
+    this.accessory.getService(this.platform.Service.AccessoryInformation)!
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Peimar');
+
+    this.service = this.accessory.getService(this.platform.Service.LightSensor) ||
+      this.accessory.addService(this.platform.Service.LightSensor);
+
+    // set the service name, this is what is displayed as the default name on the Home app.
+    this.service.setCharacteristic(this.platform.Characteristic.Name, accessory.context.device.name);
+
+    // Set up timer for updates
+    this.timer = setInterval(
+      () => this.fetchPower(),
+      accessory.context.device.updateInterval * 1000,
+    );
+
+    // Initial power update
+    this.fetchPower();
+  }
+
+  private fetchPower() {
+    this.platform.log.debug('Attempting to reach inverter server.');
+
+    const options: http.RequestOptions = {
+      hostname: this.accessory.context.device.ip,
+      port: this.accessory.context.device.port,
+      path: '/status/status.php',
+      method: 'GET',
+    };
+
+    const req = http.request(options, res => {
+      res.on('data', data => {
+        this.platform.log.debug('data: %s', data);
+      });
+    });
+
+    req.on('error', error => {
+      this.platform.log.error('error fetching inverter data: %s', error);
+    });
+
+    req.end();
+  }
+}
+
+/*
 export class Inverter implements AccessoryPlugin {
   private readonly log: Logging;
 
@@ -71,9 +124,4 @@ export class Inverter implements AccessoryPlugin {
     req.end();
   }
 }
-
-export interface InverterConfiguration {
-  address: string;
-  port: number;
-  updateInterval: number;
-}
+*/
